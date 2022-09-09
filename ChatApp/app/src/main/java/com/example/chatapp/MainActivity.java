@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnSubmit.setClickable(false);
 
                if (edtEmail.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty()){
                    if (isSigningUp && edtUsername.getText().toString().isEmpty()){
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void handleSignUp(){
@@ -93,16 +93,18 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference("user/"+FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(new User(edtUsername.getText().toString(),edtEmail.getText().toString(),""));
                     startActivity(new Intent(MainActivity.this,FriendsActivity.class));
                     Toast.makeText(MainActivity.this, "Signed up successfully", Toast.LENGTH_SHORT).show();
+                    btnSubmit.setClickable(true);
                 }else{
                     Toast.makeText(MainActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                }
+
+                    btnSubmit.setClickable(true); }
             }
         });
     }
 
     private void handleLogin(){
 
-    FirebaseAuth.getInstance().signInWithEmailAndPassword(edtEmail.getText().toString(),
+    FirebaseAuth.getInstance().signInWithEmailAndPassword(edtEmail.getText().toString().trim(),
             edtPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 
 
