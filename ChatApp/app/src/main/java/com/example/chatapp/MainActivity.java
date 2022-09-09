@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,16 +101,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleLogin(){
-    FirebaseAuth.getInstance().signInWithEmailAndPassword(edtEmail.getText().toString(),edtPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+    FirebaseAuth.getInstance().signInWithEmailAndPassword(edtEmail.getText().toString(),
+            edtPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()){
                 startActivity(new Intent(MainActivity.this,FriendsActivity.class));
-                Toast.makeText(MainActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Logged" +
+                        " in successfully", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(MainActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                Log.e("ajay",edtEmail.getText().toString());
             }
+
+
         }
+
     });
     }
 }
