@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserHolder>{
@@ -22,7 +20,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserHolder>{
     private Context context;
     private OnUserClickListener onUserClickListener;
 
-    public UsersAdapter(ArrayList<User> users, Context context, OnUserClickListener onUserClickListener) {
+    public UsersAdapter(ArrayList<User> users, Context context, OnUserClickListener onUserClickListener, ArrayList<User> Users) {
         Users = users;
         this.context = context;
         this.onUserClickListener = onUserClickListener;
