@@ -1,5 +1,7 @@
 package com.example.chatapp;
 
+import static com.example.chatapp.MainActivity.LOGE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,23 +33,15 @@ private UsersAdapter usersAdapter;
 UsersAdapter.OnUserClickListener onUserClickListener;
 
  private SwipeRefreshLayout swipeRefreshLayout;
-
-
  String myImageUrl;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
-
         progressBar = findViewById(R.id.progressBar);
         users = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler);
         swipeRefreshLayout = findViewById(R.id.swipeLayout);
-
-
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -56,7 +51,6 @@ UsersAdapter.OnUserClickListener onUserClickListener;
         });
 
         onUserClickListener = new UsersAdapter.OnUserClickListener() {
-
             @Override
             public void onUserClicked(int position) {
                 startActivity(new Intent(FriendsActivity.this,MessageActivity.class)
@@ -90,14 +84,25 @@ UsersAdapter.OnUserClickListener onUserClickListener;
     }
 
     private void getUsers(){
+        Log.e(LOGE,"get users");
         users.clear();
         FirebaseDatabase.getInstance().getReference("user").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e(LOGE,"onDataChange");
+                Log.e(LOGE," DataSnapshot loop start");
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Log.e(LOGE," DataSnapshot loop");
                     users.add(dataSnapshot.getValue(User.class));
                 }
+                Log.e(LOGE," DataSnapshot loop end");
+                Log.e(LOGE," setting usersAdapter");
+
                 usersAdapter = new UsersAdapter(users,FriendsActivity.this,onUserClickListener, users);
+                Log.e(LOGE,"new UsersAdapter Constructor call");
+                Log.e(LOGE,"setLayoutManager");
+
                 recyclerView.setLayoutManager(new LinearLayoutManager(FriendsActivity.this));
                 recyclerView.setAdapter(usersAdapter);
                 progressBar.setVisibility(View.GONE);
@@ -113,9 +118,12 @@ UsersAdapter.OnUserClickListener onUserClickListener;
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(LOGE," users onCancelled");
             }
         });
+
+        Log.e(LOGE,"get users finished");
+
     }
 
 }

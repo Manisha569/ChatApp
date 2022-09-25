@@ -74,7 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     class MessageHolder extends RecyclerView.ViewHolder{
         ConstraintLayout ccll;
         TextView txtMessage;
-        ImageView profImage
+        ImageView profImage;
         public MessageHolder(@NonNull View itemView) {
             super(itemView);
 

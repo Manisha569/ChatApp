@@ -60,7 +60,7 @@ public class MessageActivity extends AppCompatActivity {
          imgSend.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 FirebaseDatabase.getInstance().getReference("messages/"+chatRoomId).push().setValue(new Message(FirebaseAuth.getInstance().getCurrentUser().getEmail(),emailOfRoommate, editMessageInput.getText().toString());
+                 FirebaseDatabase.getInstance().getReference("messages/"+chatRoomId).push().setValue(new Message(FirebaseAuth.getInstance().getCurrentUser().getEmail(),emailOfRoommate, editMessageInput.getText().toString()));
                  editMessageInput.setText("");
              }
          });
