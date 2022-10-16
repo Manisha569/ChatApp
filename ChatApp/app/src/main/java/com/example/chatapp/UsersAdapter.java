@@ -21,7 +21,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserHolder>{
     private OnUserClickListener onUserClickListener;
 
     public UsersAdapter(ArrayList<User> users, Context context, OnUserClickListener onUserClickListener, ArrayList<User> Users) {
-        Users = users;
+        this.users = users;
         this.context = context;
         this.onUserClickListener = onUserClickListener;
     }
